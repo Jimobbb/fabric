@@ -3,15 +3,15 @@
     <el-alert
       type="success"
     >
-      <p>账户ID: {{ accountId }}</p>
-      <p>用户名: {{ userName }}</p>
-      <p>余额: ￥{{ balance }} 元</p>
-      <p>当发起出售、捐赠或质押操作后，担保状态为true</p>
-      <p>当担保状态为false时，才可发起出售、捐赠或质押操作</p>
+      <p>Account ID: {{ accountId }}</p>
+      <p>User Name: {{ userName }}</p>
+      <p>Balance: $ {{ balance }}</p>
+      <p>Tips: After initiating a sale, donation, or pledge operation, the guarantee status is set to true</p>
+      <p>Sale, donation, or pledge operations can only be initiated when the guarantee status is false.</p>
     </el-alert>
     <div v-if="realEstateList.length==0" style="text-align: center;">
       <el-alert
-        title="查询不到数据"
+        title="Cannot get data!"
         type="warning"
       />
     </div>
@@ -19,31 +19,31 @@
       <el-col v-for="(val,index) in realEstateList" :key="index" :span="6" :offset="1">
         <el-card class="realEstate-card">
           <div slot="header" class="clearfix">
-            担保状态:
+            GUARANTEE STATUS:
             <span style="color: rgb(255, 0, 0);">{{ val.encumbrance }}</span>
           </div>
 
           <div class="item">
-            <el-tag>房产ID: </el-tag>
+            <el-tag>Property ID: </el-tag>
             <span>{{ val.realEstateId }}</span>
           </div>
           <div class="item">
-            <el-tag type="success">业主ID: </el-tag>
+            <el-tag type="success">Seller ID: </el-tag>
             <span>{{ val.proprietor }}</span>
           </div>
           <div class="item">
-            <el-tag type="warning">总空间: </el-tag>
+            <el-tag type="warning">Property Size: </el-tag>
             <span>{{ val.totalArea }} ㎡</span>
           </div>
           <div class="item">
-            <el-tag type="danger">居住空间: </el-tag>
+            <el-tag type="danger">Living Size: </el-tag>
             <span>{{ val.livingSpace }} ㎡</span>
           </div>
 
           <div v-if="!val.encumbrance&&roles[0] !== 'admin'">
-            <el-button type="text" @click="openDialog(val)">出售</el-button>
+            <el-button type="text" @click="openDialog(val)">Sale</el-button>
             <el-divider direction="vertical" />
-            <el-button type="text" @click="openDonatingDialog(val)">捐赠</el-button>
+            <el-button type="text" @click="openDonatingDialog(val)">Donate</el-button>
           </div>
           <el-rate v-if="roles[0] === 'admin'" />
         </el-card>
@@ -51,22 +51,22 @@
     </el-row>
     <el-dialog v-loading="loadingDialog" :visible.sync="dialogCreateSelling" :close-on-click-modal="false" @close="resetForm('realForm')">
       <el-form ref="realForm" :model="realForm" :rules="rules" label-width="100px">
-        <el-form-item label="价格 (元)" prop="price">
+        <el-form-item label="price" prop="price">
           <el-input-number v-model="realForm.price" :precision="2" :step="10000" :min="0" />
         </el-form-item>
-        <el-form-item label="有效期 (天)" prop="salePeriod">
+        <el-form-item label="valid time" prop="salePeriod">
           <el-input-number v-model="realForm.salePeriod" :min="1" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="createSelling('realForm')">立即出售</el-button>
-        <el-button @click="dialogCreateSelling = false">取 消</el-button>
+        <el-button type="primary" @click="createSelling('realForm')">Sale</el-button>
+        <el-button @click="dialogCreateSelling = false">Cancel</el-button>
       </div>
     </el-dialog>
     <el-dialog v-loading="loadingDialog" :visible.sync="dialogCreateDonating" :close-on-click-modal="false" @close="resetForm('DonatingForm')">
       <el-form ref="DonatingForm" :model="DonatingForm" :rules="rulesDonating" label-width="100px">
-        <el-form-item label="业主" prop="proprietor">
-          <el-select v-model="DonatingForm.proprietor" placeholder="请选择业主" @change="selectGet">
+        <el-form-item label="Owner" prop="proprietor">
+          <el-select v-model="DonatingForm.proprietor" placeholder="Please choose owner" @change="selectGet">
             <el-option
               v-for="item in accountList"
               :key="item.accountId"
@@ -80,8 +80,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="createDonating('DonatingForm')">立即捐赠</el-button>
-        <el-button @click="dialogCreateDonating = false">取 消</el-button>
+        <el-button type="primary" @click="createDonating('DonatingForm')">Donate</el-button>
+        <el-button @click="dialogCreateDonating = false">Cancel</el-button>
       </div>
     </el-dialog>
   </div>
@@ -99,7 +99,7 @@ export default {
   data() {
     var checkArea = (rule, value, callback) => {
       if (value <= 0) {
-        callback(new Error('必须大于0'))
+        callback(new Error('Must > 0'))
       } else {
         callback()
       }
@@ -127,7 +127,7 @@ export default {
       },
       rulesDonating: {
         proprietor: [
-          { required: true, message: '请选择业主', trigger: 'change' }
+          { required: true, message: 'Please choose owner', trigger: 'change' }
         ]
       },
       accountList: [],
@@ -183,9 +183,9 @@ export default {
     createSelling(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$confirm('是否立即出售?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+          this.$confirm('Is Selling Immediately?', 'Attension', {
+            confirmButtonText: 'Sure',
+            cancelButtonText: 'Cancel',
             type: 'success'
           }).then(() => {
             this.loadingDialog = true
@@ -200,12 +200,12 @@ export default {
               if (response !== null) {
                 this.$message({
                   type: 'success',
-                  message: '出售成功!'
+                  message: 'Successful!'
                 })
               } else {
                 this.$message({
                   type: 'error',
-                  message: '出售失败!'
+                  message: 'Failure!'
                 })
               }
               setTimeout(() => {
@@ -220,7 +220,7 @@ export default {
             this.dialogCreateSelling = false
             this.$message({
               type: 'info',
-              message: '已取消出售'
+              message: 'have cancelled'
             })
           })
         } else {
@@ -231,9 +231,9 @@ export default {
     createDonating(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$confirm('是否立即捐赠?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+          this.$confirm('Is Donating Immediately?', 'Attension', {
+            confirmButtonText: 'Sure',
+            cancelButtonText: 'Cancel',
             type: 'success'
           }).then(() => {
             this.loadingDialog = true
@@ -247,12 +247,12 @@ export default {
               if (response !== null) {
                 this.$message({
                   type: 'success',
-                  message: '捐赠成功!'
+                  message: 'Successful!'
                 })
               } else {
                 this.$message({
                   type: 'error',
-                  message: '捐赠失败!'
+                  message: 'Failure!'
                 })
               }
               setTimeout(() => {
@@ -267,7 +267,7 @@ export default {
             this.dialogCreateDonating = false
             this.$message({
               type: 'info',
-              message: '已取消捐赠'
+              message: 'have cancelled'
             })
           })
         } else {

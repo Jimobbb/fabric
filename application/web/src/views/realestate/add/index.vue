@@ -2,8 +2,8 @@
   <div class="app-container">
     <el-form ref="ruleForm" v-loading="loading" :model="ruleForm" :rules="rules" label-width="100px">
 
-      <el-form-item label="业主" prop="proprietor">
-        <el-select v-model="ruleForm.proprietor" placeholder="请选择业主" @change="selectGet">
+      <el-form-item label="Owner" prop="proprietor">
+        <el-select v-model="ruleForm.proprietor" placeholder="Please choose owner" @change="selectGet">
           <el-option
             v-for="item in accountList"
             :key="item.accountId"
@@ -15,15 +15,15 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="总空间 ㎡" prop="totalArea">
+      <el-form-item label="Property Size ㎡" prop="totalArea">
         <el-input-number v-model="ruleForm.totalArea" :precision="2" :step="0.1" :min="0" />
       </el-form-item>
-      <el-form-item label="居住空间 ㎡" prop="livingSpace">
+      <el-form-item label="Living Size ㎡" prop="livingSpace">
         <el-input-number v-model="ruleForm.livingSpace" :precision="2" :step="0.1" :min="0" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')">Add Property</el-button>
+        <el-button @click="resetForm('ruleForm')">Reset</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -39,7 +39,7 @@ export default {
   data() {
     var checkArea = (rule, value, callback) => {
       if (value <= 0) {
-        callback(new Error('必须大于0'))
+        callback(new Error('Must > 0'))
       } else {
         callback()
       }
@@ -53,7 +53,7 @@ export default {
       accountList: [],
       rules: {
         proprietor: [
-          { required: true, message: '请选择业主', trigger: 'change' }
+          { required: true, message: 'Please choose owner', trigger: 'change' }
         ],
         totalArea: [
           { validator: checkArea, trigger: 'blur' }
@@ -84,9 +84,9 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$confirm('是否立即创建?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+          this.$confirm('Add Property Immediately?', 'Attension', {
+            confirmButtonText: 'Sure',
+            cancelButtonText: 'Cancel',
             type: 'success'
           }).then(() => {
             this.loading = true
@@ -100,12 +100,12 @@ export default {
               if (response !== null) {
                 this.$message({
                   type: 'success',
-                  message: '创建成功!'
+                  message: 'Successful!'
                 })
               } else {
                 this.$message({
                   type: 'error',
-                  message: '创建失败!'
+                  message: 'Failure!'
                 })
               }
             }).catch(_ => {
@@ -115,7 +115,7 @@ export default {
             this.loading = false
             this.$message({
               type: 'info',
-              message: '已取消创建'
+              message: 'have cancelled'
             })
           })
         } else {
