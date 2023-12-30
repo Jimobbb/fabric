@@ -37,7 +37,7 @@ export function parseTime(time, cFormat) {
   const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
     const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value ] }
+    if (key === 'a') { return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][value ] }
     return value.toString().padStart(2, '0')
   })
   return time_str
@@ -60,14 +60,14 @@ export function formatTime(time, option) {
   const diff = (now - d) / 1000
 
   if (diff < 30) {
-    return '刚刚'
+    return 'Now'
   } else if (diff < 3600) {
     // less 1 hour
-    return Math.ceil(diff / 60) + '分钟前'
+    return Math.ceil(diff / 60) + 'Minutes Before'
   } else if (diff < 3600 * 24) {
-    return Math.ceil(diff / 3600) + '小时前'
+    return Math.ceil(diff / 3600) + 'Hours Before'
   } else if (diff < 3600 * 24 * 2) {
-    return '1天前'
+    return 'One Day Before'
   }
   if (option) {
     return parseTime(time, option)
@@ -75,13 +75,13 @@ export function formatTime(time, option) {
     return (
       d.getMonth() +
       1 +
-      '月' +
+      'Months' +
       d.getDate() +
-      '日' +
+      'Days' +
       d.getHours() +
-      '时' +
+      'Hours' +
       d.getMinutes() +
-      '分'
+      'Minutes'
     )
   }
 }

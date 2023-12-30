@@ -13,7 +13,7 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     if (res.code !== 200) {
-      MessageBox.alert('服务器开小差了', 'error', {
+      MessageBox.alert('Service Error', 'error', {
         confirmButtonText: '确定',
         type: 'warning'
       })
@@ -25,14 +25,14 @@ service.interceptors.response.use(
   error => {
     if (error.response === undefined) {
       Message({
-        message: '请求失败 ' + error.message,
+        message: 'Request Failure ' + error.message,
         type: 'error',
         duration: 5 * 1000
       })
       return Promise.reject(error)
     } else {
       Message({
-        message: '失败 ' + error.response.data.data,
+        message: 'Failure ' + error.response.data.data,
         type: 'error',
         duration: 5 * 1000
       })
