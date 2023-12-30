@@ -3,13 +3,13 @@
     <el-alert
       type="success"
     >
-      <p>账户ID: {{ accountId }}</p>
-      <p>用户名: {{ userName }}</p>
-      <p>余额: ￥{{ balance }} 元</p>
+      <p>Account ID: {{ accountId }}</p>
+      <p>User Name: {{ userName }}</p>
+      <p>Balance: $ {{ balance }}</p>
     </el-alert>
     <div v-if="donatingList.length==0" style="text-align: center;">
       <el-alert
-        title="查询不到数据"
+        title="Cannot get data!"
         type="warning"
       />
     </div>
@@ -18,22 +18,22 @@
         <el-card class="d-me-card">
           <div slot="header" class="clearfix">
             <span>{{ val.donatingStatus }}</span>
-            <el-button v-if="val.donatingStatus === '捐赠中'" style="float: right; padding: 3px 0" type="text" @click="updateDonating(val)">取消</el-button>
+            <el-button v-if="val.donatingStatus === '捐赠中'" style="float: right; padding: 3px 0" type="text" @click="updateDonating(val)">Cancel</el-button>
           </div>
           <div class="item">
-            <el-tag>房产ID: </el-tag>
+            <el-tag>Property ID: </el-tag>
             <span>{{ val.objectOfDonating }}</span>
           </div>
           <div class="item">
-            <el-tag type="success">捐赠者ID: </el-tag>
+            <el-tag type="success">Donor ID: </el-tag>
             <span>{{ val.donor }}</span>
           </div>
           <div class="item">
-            <el-tag type="danger">受赠人ID: </el-tag>
+            <el-tag type="danger">Recipient ID: </el-tag>
             <span>{{ val.grantee }}</span>
           </div>
           <div class="item">
-            <el-tag type="warning">创建时间: </el-tag>
+            <el-tag type="warning">Created Time: </el-tag>
             <span>{{ val.createTime }}</span>
           </div>
         </el-card>
@@ -73,9 +73,9 @@ export default {
   },
   methods: {
     updateDonating(item) {
-      this.$confirm('是否要取消捐赠?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Do you want to cancel donation?', 'Attension', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'success'
       }).then(() => {
         this.loading = true
@@ -89,12 +89,12 @@ export default {
           if (response !== null) {
             this.$message({
               type: 'success',
-              message: '操作成功!'
+              message: 'Successful!'
             })
           } else {
             this.$message({
               type: 'error',
-              message: '操作失败!'
+              message: 'Failure!'
             })
           }
           setTimeout(() => {
@@ -107,7 +107,7 @@ export default {
         this.loading = false
         this.$message({
           type: 'info',
-          message: '已取消操作'
+          message: 'have cancelled'
         })
       })
     }

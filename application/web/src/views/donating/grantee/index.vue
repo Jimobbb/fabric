@@ -3,13 +3,13 @@
     <el-alert
       type="success"
     >
-      <p>账户ID: {{ accountId }}</p>
-      <p>用户名: {{ userName }}</p>
-      <p>余额: ￥{{ balance }} 元</p>
+      <p>Account ID: {{ accountId }}</p>
+      <p>User Name: {{ userName }}</p>
+      <p>Balance: $ {{ balance }}</p>
     </el-alert>
     <div v-if="donatingList.length==0" style="text-align: center;">
       <el-alert
-        title="查询不到数据"
+        title="Cannot get data!"
         type="warning"
       />
     </div>
@@ -18,23 +18,23 @@
         <el-card class="d-buy-card">
           <div slot="header" class="clearfix">
             <span>{{ val.donating.donatingStatus }}</span>
-            <el-button v-if="val.donating.donatingStatus==='捐赠中'" style="float: right; padding: 3px 0" type="text" @click="updateDonating(val,'done')">确认接收</el-button>
-            <el-button v-if="val.donating.donatingStatus==='捐赠中'" style="float: right; padding: 3px 6px" type="text" @click="updateDonating(val,'cancelled')">取消</el-button>
+            <el-button v-if="val.donating.donatingStatus==='捐赠中'" style="float: right; padding: 3px 0" type="text" @click="updateDonating(val,'done')">Receive</el-button>
+            <el-button v-if="val.donating.donatingStatus==='捐赠中'" style="float: right; padding: 3px 6px" type="text" @click="updateDonating(val,'cancelled')">Cancel</el-button>
           </div>
           <div class="item">
-            <el-tag>房产ID: </el-tag>
+            <el-tag>Property ID: </el-tag>
             <span>{{ val.donating.objectOfDonating }}</span>
           </div>
           <div class="item">
-            <el-tag type="success">捐赠者ID: </el-tag>
+            <el-tag type="success">Donor ID: </el-tag>
             <span>{{ val.donating.donor }}</span>
           </div>
           <div class="item">
-            <el-tag type="danger">受赠人ID: </el-tag>
+            <el-tag type="danger">Recipient ID: </el-tag>
             <span>{{ val.donating.grantee }}</span>
           </div>
           <div class="item">
-            <el-tag type="warning">创建时间: </el-tag>
+            <el-tag type="warning">Created Time: </el-tag>
             <span>{{ val.donating.createTime }}</span>
           </div>
         </el-card>
@@ -76,13 +76,13 @@ export default {
     updateDonating(item, type) {
       let tip = ''
       if (type === 'done') {
-        tip = '确认接受捐赠'
+        tip = 'receive'
       } else {
-        tip = '取消捐赠操作'
+        tip = 'cancel'
       }
-      this.$confirm('是否要' + tip + '?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Do you want to' + tip + '?', 'Attension', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'success'
       }).then(() => {
         this.loading = true
@@ -96,12 +96,12 @@ export default {
           if (response !== null) {
             this.$message({
               type: 'success',
-              message: tip + '操作成功!'
+              message: tip + 'Successful!'
             })
           } else {
             this.$message({
               type: 'error',
-              message: tip + '操作失败!'
+              message: tip + 'Failure!'
             })
           }
           setTimeout(() => {
@@ -114,7 +114,7 @@ export default {
         this.loading = false
         this.$message({
           type: 'info',
-          message: '已取消' + tip
+          message: 'have cancelled' + tip
         })
       })
     }
