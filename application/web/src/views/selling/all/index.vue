@@ -3,13 +3,13 @@
     <el-alert
       type="success"
     >
-      <p>账户ID: {{ accountId }}</p>
-      <p>用户名: {{ userName }}</p>
-      <p>余额: ￥{{ balance }} 元</p>
+      <p>Account ID: {{ accountId }}</p>
+      <p>User Name: {{ userName }}</p>
+      <p>Balance: $ {{ balance }}</p>
     </el-alert>
     <div v-if="sellingList.length==0" style="text-align: center;">
       <el-alert
-        title="查询不到数据"
+        title="Cannot get data!"
         type="warning"
       />
     </div>
@@ -18,33 +18,33 @@
         <el-card class="all-card">
           <div slot="header" class="clearfix">
             <span>{{ val.sellingStatus }}</span>
-            <el-button v-if="roles[0] !== 'admin'&&(val.seller===accountId||val.buyer===accountId)&&val.sellingStatus!=='完成'&&val.sellingStatus!=='已过期'&&val.sellingStatus!=='已取消'" style="float: right; padding: 3px 0" type="text" @click="updateSelling(val,'cancelled')">取消</el-button>
-            <el-button v-if="roles[0] !== 'admin'&&val.seller===accountId&&val.sellingStatus==='交付中'" style="float: right; padding: 3px 8px" type="text" @click="updateSelling(val,'done')">确认收款</el-button>
-            <el-button v-if="roles[0] !== 'admin'&&val.sellingStatus==='销售中'&&val.seller!==accountId" style="float: right; padding: 3px 0" type="text" @click="createSellingByBuy(val)">购买</el-button>
+            <el-button v-if="roles[0] !== 'admin'&&(val.seller===accountId||val.buyer===accountId)&&val.sellingStatus!=='完成'&&val.sellingStatus!=='已过期'&&val.sellingStatus!=='已取消'" style="float: right; padding: 3px 0" type="text" @click="updateSelling(val,'cancelled')">CANCEL</el-button>
+            <el-button v-if="roles[0] !== 'admin'&&val.seller===accountId&&val.sellingStatus==='交付中'" style="float: right; padding: 3px 8px" type="text" @click="updateSelling(val,'done')">RECEIVE</el-button>
+            <el-button v-if="roles[0] !== 'admin'&&val.sellingStatus==='销售中'&&val.seller!==accountId" style="float: right; padding: 3px 0" type="text" @click="createSellingByBuy(val)">BUY</el-button>
           </div>
           <div class="item">
-            <el-tag>房产ID: </el-tag>
+            <el-tag>Property ID: </el-tag>
             <span>{{ val.objectOfSale }}</span>
           </div>
           <div class="item">
-            <el-tag type="success">销售者ID: </el-tag>
+            <el-tag type="success">Seller ID: </el-tag>
             <span>{{ val.seller }}</span>
           </div>
           <div class="item">
-            <el-tag type="danger">价格: </el-tag>
-            <span>￥{{ val.price }} 元</span>
+            <el-tag type="danger">Price: </el-tag>
+            <span>$ {{ val.price }}</span>
           </div>
           <div class="item">
-            <el-tag type="warning">有效期: </el-tag>
-            <span>{{ val.salePeriod }} 天</span>
+            <el-tag type="warning">Valid Date: </el-tag>
+            <span>{{ val.salePeriod }} days</span>
           </div>
           <div class="item">
-            <el-tag type="info">创建时间: </el-tag>
+            <el-tag type="info">Created Date: </el-tag>
             <span>{{ val.createTime }}</span>
           </div>
           <div class="item">
-            <el-tag>购买者ID: </el-tag>
-            <span v-if="val.buyer===''">虚位以待</span>
+            <el-tag>Buyer ID: </el-tag>
+            <span v-if="val.buyer===''" style="color: #FF0000;">Waiting for you</span>
             <span>{{ val.buyer }}</span>
           </div>
         </el-card>
@@ -85,9 +85,9 @@ export default {
   },
   methods: {
     createSellingByBuy(item) {
-      this.$confirm('是否立即购买?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Are you sure buying now?', 'Attension', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'success'
       }).then(() => {
         this.loading = true
@@ -100,12 +100,12 @@ export default {
           if (response !== null) {
             this.$message({
               type: 'success',
-              message: '购买成功!'
+              message: 'Successful!'
             })
           } else {
             this.$message({
               type: 'error',
-              message: '购买失败!'
+              message: 'Failure!'
             })
           }
           setTimeout(() => {
@@ -118,20 +118,20 @@ export default {
         this.loading = false
         this.$message({
           type: 'info',
-          message: '已取消购买'
+          message: 'Cancel to buy'
         })
       })
     },
     updateSelling(item, type) {
       let tip = ''
       if (type === 'done') {
-        tip = '确认收款'
+        tip = 'Receive'
       } else {
-        tip = '取消操作'
+        tip = 'Cancel'
       }
-      this.$confirm('是否要' + tip + '?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Do you want to' + tip + '?', 'Attension', {
+        confirmButtonText: 'Sure',
+        cancelButtonText: 'Cancel',
         type: 'success'
       }).then(() => {
         this.loading = true
@@ -145,12 +145,12 @@ export default {
           if (response !== null) {
             this.$message({
               type: 'success',
-              message: tip + '操作成功!'
+              message: tip + 'Successful!'
             })
           } else {
             this.$message({
               type: 'error',
-              message: tip + '操作失败!'
+              message: tip + 'Failure!'
             })
           }
           setTimeout(() => {
@@ -163,7 +163,7 @@ export default {
         this.loading = false
         this.$message({
           type: 'info',
-          message: '已取消' + tip
+          message: 'have cancelled' + tip
         })
       })
     }
