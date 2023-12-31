@@ -51,7 +51,7 @@ export const constantRoutes = [{
     name: 'Realestate',
     component: () => import('@/views/realestate/list/index'),
     meta: {
-      title: '房产信息',
+      title: 'INFORMATION',
       icon: 'realestate'
     }
   }]
@@ -70,7 +70,7 @@ export const asyncRoutes = [
     name: 'Selling',
     alwaysShow: true,
     meta: {
-      title: '销售',
+      title: 'SALE',
       icon: 'selling'
     },
     children: [{
@@ -78,7 +78,7 @@ export const asyncRoutes = [
       name: 'SellingAll',
       component: () => import('@/views/selling/all/index'),
       meta: {
-        title: '所有销售',
+        title: 'ALL SALE',
         icon: 'sellingAll'
       }
     },
@@ -88,7 +88,7 @@ export const asyncRoutes = [
       component: () => import('@/views/selling/me/index'),
       meta: {
         roles: ['editor'],
-        title: '我发起的',
+        title: 'MY SALE',
         icon: 'sellingMe'
       }
     }, {
@@ -97,7 +97,7 @@ export const asyncRoutes = [
       component: () => import('@/views/selling/buy/index'),
       meta: {
         roles: ['editor'],
-        title: '我购买的',
+        title: 'MY BUY',
         icon: 'sellingBuy'
       }
     }
@@ -110,7 +110,7 @@ export const asyncRoutes = [
     name: 'Donating',
     alwaysShow: true,
     meta: {
-      title: '捐赠',
+      title: 'DONATE',
       icon: 'donating'
     },
     children: [{
@@ -118,7 +118,7 @@ export const asyncRoutes = [
       name: 'DonatingAll',
       component: () => import('@/views/donating/all/index'),
       meta: {
-        title: '所有捐赠',
+        title: 'ALL DONATE',
         icon: 'donatingAll'
       }
     },
@@ -128,7 +128,7 @@ export const asyncRoutes = [
       component: () => import('@/views/donating/donor/index'),
       meta: {
         roles: ['editor'],
-        title: '我发起的捐赠',
+        title: 'MY DONATE',
         icon: 'donatingDonor'
       }
     }, {
@@ -137,7 +137,7 @@ export const asyncRoutes = [
       component: () => import('@/views/donating/grantee/index'),
       meta: {
         roles: ['editor'],
-        title: '我收到的受赠',
+        title: 'MY RECEIVE',
         icon: 'donatingGrantee'
       }
     }
@@ -154,7 +154,7 @@ export const asyncRoutes = [
       name: 'AddRealestate',
       component: () => import('@/views/realestate/add/index'),
       meta: {
-        title: '新增房产',
+        title: 'ADD PROPERTY',
         icon: 'addRealestate'
       }
     }]

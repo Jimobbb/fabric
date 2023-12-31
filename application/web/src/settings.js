@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '基于区块链的房地产交易系统',
+  title: 'CHAIN PROPERTY',
 
   /**
    * @type {boolean} true | false

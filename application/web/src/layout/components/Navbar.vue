@@ -12,19 +12,19 @@
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <el-dropdown-item>
-            账户ID: {{ accountId }}
+            ACCOUNT ID: {{ accountId }}
           </el-dropdown-item>
           <el-dropdown-item>
-            用户名: {{ userName }}
+            USER NAME: {{ userName }}
           </el-dropdown-item>
           <el-dropdown-item>
-            余额: ￥{{ balance }} 元
+            BALANCE: $ {{ balance }}
           </el-dropdown-item>
-          <a target="_blank" href="https://github.com/togettoyou/fabric-realty">
+          <!-- <a target="_blank" href="https://github.com/togettoyou/fabric-realty">
             <el-dropdown-item>项目地址</el-dropdown-item>
-          </a>
+          </a> -->
           <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">切换账户</span>
+            <span style="display:block;">CHANGE ACCOUNT</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
