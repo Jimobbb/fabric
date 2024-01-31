@@ -10,7 +10,7 @@ import (
 	pb "github.com/hyperledger/fabric/protos/peer"
 )
 
-// QueryAccountList 查询账户列表
+// QueryAccountList 按照args定向查询
 func QueryAccountList(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	var accountList []model.Account
 	results, err := utils.GetStateByPartialCompositeKeys(stub, model.AccountKey, args)
@@ -19,17 +19,17 @@ func QueryAccountList(stub shim.ChaincodeStubInterface, args []string) pb.Respon
 	}
 	for _, v := range results {
 		if v != nil {
-			var account model.Account
+			var account model.Account //创建新账户
 			err := json.Unmarshal(v, &account)
 			if err != nil {
-				return shim.Error(fmt.Sprintf("QueryAccountList-反序列化出错: %s", err))
+				return shim.Error(fmt.Sprintf("QueryAccountList-errorinUnmarshal: %s", err))
 			}
 			accountList = append(accountList, account)
 		}
 	}
 	accountListByte, err := json.Marshal(accountList)
 	if err != nil {
-		return shim.Error(fmt.Sprintf("QueryAccountList-序列化出错: %s", err))
+		return shim.Error(fmt.Sprintf("QueryAccountList-errorinUnmarshal: %s", err))
 	}
 	return shim.Success(accountListByte)
 }

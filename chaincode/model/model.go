@@ -18,7 +18,7 @@ type RealEstate struct {
 	LivingSpace  float64 `json:"livingSpace"`  //生活空间
 }
 
-// Selling 销售要约
+// Selling 销售
 // 需要确定ObjectOfSale是否属于Seller
 // 买家初始为空
 // Seller和ObjectOfSale一起作为复合键,保证可以通过seller查询到名下所有发起的销售
@@ -35,11 +35,11 @@ type Selling struct {
 // SellingStatusConstant 销售状态
 var SellingStatusConstant = func() map[string]string {
 	return map[string]string{
-		"saleStart": "销售中", //正在销售状态,等待买家光顾
-		"cancelled": "已取消", //被卖家取消销售或买家退款操作导致取消
-		"expired":   "已过期", //销售期限到期
-		"delivery":  "交付中", //买家买下并付款,处于等待卖家确认收款状态,如若卖家未能确认收款，买家可以取消并退款
-		"done":      "完成",  //卖家确认接收资金，交易完成
+		"saleStart": "onsale", //正在销售状态,等待买家光顾
+		"cancelled": "cancelled", //被卖家取消销售或买家退款操作导致取消
+		"expired":   "expired", //销售期限到期
+		"delivery":  "delivery", //买家买下并付款,处于等待卖家确认收款状态,如若卖家未能确认收款，买家可以取消并退款
+		"done":      "done",  //卖家确认接收资金，交易完成
 	}
 }
 
@@ -66,9 +66,9 @@ type Donating struct {
 // DonatingStatusConstant 捐赠状态
 var DonatingStatusConstant = func() map[string]string {
 	return map[string]string{
-		"donatingStart": "捐赠中", //捐赠人发起捐赠合约，等待受赠人确认受赠
-		"cancelled":     "已取消", //捐赠人在受赠人确认受赠之前取消捐赠或受赠人取消接收受赠
-		"done":          "完成",  //受赠人确认接收，交易完成
+		"donatingStart": "ondonating", //捐赠人发起捐赠合约，等待受赠人确认受赠
+		"cancelled":     "cancelled", //捐赠人在受赠人确认受赠之前取消捐赠或受赠人取消接收受赠
+		"done":          "done",  //受赠人确认接收，交易完成
 	}
 }
 

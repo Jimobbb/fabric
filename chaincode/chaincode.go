@@ -16,7 +16,7 @@ type BlockChainRealEstate struct {
 
 // Init 链码初始化
 func (t *BlockChainRealEstate) Init(stub shim.ChaincodeStubInterface) pb.Response {
-	fmt.Println("链码初始化")
+	fmt.Println("Chain code initialization")
 	//初始化默认数据
 	var accountIds = [6]string{
 		"5feceb66ffc8",
@@ -26,8 +26,8 @@ func (t *BlockChainRealEstate) Init(stub shim.ChaincodeStubInterface) pb.Respons
 		"4b227777d4dd",
 		"ef2d127de37b",
 	}
-	var userNames = [6]string{"管理员", "①号业主", "②号业主", "③号业主", "④号业主", "⑤号业主"}
-	var balances = [6]float64{0, 5000000, 5000000, 5000000, 5000000, 5000000}
+	var userNames = [6]string{"manager", "owner1", "owner2", "owner3", "owner4", "owner5"}
+	var balances = [6]float64{0, 5000000, 6000000, 7000000, 8000000, 9000000}
 	//初始化账号数据
 	for i, val := range accountIds {
 		account := &model.Account{
@@ -74,7 +74,7 @@ func (t *BlockChainRealEstate) Invoke(stub shim.ChaincodeStubInterface) pb.Respo
 	case "updateDonating":
 		return api.UpdateDonating(stub, args)
 	default:
-		return shim.Error(fmt.Sprintf("没有该功能: %s", funcName))
+		return shim.Error(fmt.Sprintf("no such function: %s", funcName))
 	}
 }
 
